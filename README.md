@@ -2,52 +2,195 @@
 
 ## Project Overview
 
-This project was developed as part of a university assignment on recommender systems. The goal was to explore different recommendation approaches and compare their performance using real user-movie interaction data.
+This project implements a movie recommendation system using collaborative filtering techniques on the MovieLens dataset.
 
-During the project, I implemented and evaluated several recommendation algorithms, starting from simple baseline methods and progressing to more advanced collaborative filtering techniques.
+The objective is to explore how recommender systems work by building a complete recommendation pipeline, starting from raw user ratings and ending with personalized movie recommendations.
 
-## Objectives
+The project was developed in Python using Pandas, NumPy, Scikit-Learn, and Jupyter Notebook.
 
-The main objectives of this project were:
+---
 
-* Understand how recommender systems work
-* Build a baseline recommendation model
-* Create a user-item interaction matrix
-* Implement collaborative filtering methods
-* Compare different recommendation algorithms
-* Evaluate recommendation quality using standard metrics
+## Dataset
 
-## Implemented Methods
+The project uses the MovieLens dataset, which contains:
 
-### 1. Top Popular (Baseline)
+* User IDs
+* Movie IDs
+* Movie titles
+* User ratings
 
-The baseline recommender suggests the most popular movies to all users. This method does not consider personal preferences and serves as a reference point for evaluating more advanced algorithms.
+Each user can rate multiple movies on a scale from 0.5 to 5.0 stars.
 
-### 2. Average Embedding Similarity
+---
 
-This content-based approach recommends movies by comparing item embeddings and finding similar movies based on their content features.
+## Stage 1: Data Loading and Exploration
 
-### 3. Content-Based Item KNN
+The first step was loading the dataset and exploring its structure.
 
-A K-Nearest Neighbors model that recommends movies similar to those a user has previously interacted with.
+Tasks completed:
 
-### 4. Collaborative Filtering Item KNN
+* Loaded ratings data
+* Loaded movie metadata
+* Inspected missing values
+* Checked dataset dimensions
+* Explored rating distributions
+* Examined user activity and movie popularity
 
-This method recommends movies based on patterns found in user interactions and similarities between items.
+Purpose:
 
-### 5. Singular Value Decomposition (SVD)
+To understand the data before building recommendation models.
 
-A matrix factorization technique that discovers hidden relationships between users and movies and generates personalized recommendations.
+---
 
-## Evaluation
+## Stage 2: User-Movie Matrix Construction
 
-The performance of the recommendation algorithms was evaluated using:
+A user-item interaction matrix was created.
 
-* Precision@K
-* Recall@K
-* Normalized Discounted Cumulative Gain (nDCG)
+Rows represent:
 
-These metrics measure how relevant and useful the recommendations are for different groups of users.
+* Users
+
+Columns represent:
+
+* Movies
+
+Values represent:
+
+* Ratings
+
+Example:
+
+| User   | Movie A | Movie B | Movie C |
+| ------ | ------- | ------- | ------- |
+| User 1 | 5       | 4       | 0       |
+| User 2 | 3       | 0       | 5       |
+
+Missing ratings were filled with zeros.
+
+Purpose:
+
+This matrix is the foundation of collaborative filtering.
+
+---
+
+## Stage 3: Cosine Similarity Between Users
+
+User similarity was computed using Cosine Similarity.
+
+Cosine similarity measures how similar two users are based on their rating behavior.
+
+Values range from:
+
+* 1 → identical preferences
+* 0 → unrelated preferences
+* -1 → opposite preferences
+
+Purpose:
+
+To identify users with similar movie tastes.
+
+---
+
+## Stage 4: User-Based Collaborative Filtering
+
+For a target user:
+
+1. Find the most similar users.
+2. Collect their ratings.
+3. Use those ratings to generate recommendations.
+
+Example:
+
+If User A and User B have very similar tastes, movies liked by User B can be recommended to User A.
+
+Purpose:
+
+Generate personalized recommendations using neighboring users.
+
+---
+
+## Stage 5: Singular Value Decomposition (SVD)
+
+Dimensionality reduction was applied using Singular Value Decomposition (SVD).
+
+SVD decomposes the user-movie matrix into latent factors that capture hidden relationships between users and movies.
+
+Benefits:
+
+* Reduces noise
+* Compresses information
+* Captures hidden preference patterns
+* Improves recommendation quality
+
+Purpose:
+
+Create a more powerful collaborative filtering model.
+
+---
+
+## Stage 6: User Similarity in Latent Space
+
+After applying SVD:
+
+* User feature vectors were generated.
+* Cosine similarity was calculated again using latent features.
+
+This produces similarity scores based on hidden preferences rather than only explicit ratings.
+
+Purpose:
+
+Find users with similar underlying interests.
+
+---
+
+## Stage 7: Personalized Movie Recommendations
+
+Recommendations were generated using:
+
+1. The most similar users found in latent space.
+2. Their average movie ratings.
+3. Removal of movies already watched by the target user.
+4. Ranking remaining movies by predicted score.
+
+Example recommended movies:
+
+* Terminator 2: Judgment Day (1991)
+* The Godfather (1972)
+* Blade Runner (1982)
+* Aliens (1986)
+* The Sixth Sense (1999)
+* Die Hard (1988)
+
+Purpose:
+
+Provide personalized unseen movie recommendations.
+
+---
+
+## Stage 8: Evaluation
+
+The recommendation model was evaluated using Root Mean Squared Error (RMSE).
+
+RMSE measures the difference between:
+
+* Original ratings
+* Ratings reconstructed by SVD
+
+Formula:
+
+RMSE = sqrt(MSE)
+
+Result:
+
+RMSE = 0.352
+
+Interpretation:
+
+A lower RMSE indicates better reconstruction quality.
+
+An RMSE of 0.352 suggests that the SVD model captures the rating patterns effectively and produces reasonable predictions.
+
+---
 
 ## Technologies Used
 
@@ -59,10 +202,39 @@ These metrics measure how relevant and useful the recommendations are for differ
 * Jupyter Notebook
 * Matplotlib
 
-## What I Learned
+---
 
-Through this project, I learned how recommendation systems are built, how user-item interaction data is represented, how collaborative filtering works, and how recommendation quality can be evaluated using industry-standard metrics.
+## Skills Demonstrated
+
+This project demonstrates:
+
+* Data preprocessing
+* Exploratory Data Analysis (EDA)
+* Matrix manipulation
+* Cosine similarity
+* Collaborative filtering
+* Recommendation systems
+* Singular Value Decomposition (SVD)
+* Model evaluation with RMSE
+* Data analysis using Python
+
+---
+
+## Future Improvements
+
+Possible future enhancements include:
+
+* Item-based collaborative filtering
+* Content-based recommendations
+* Hybrid recommender systems
+* Precision@K evaluation
+* Recall@K evaluation
+* nDCG evaluation
+* Interactive web application using Streamlit
+
+---
 
 ## Author
 
 Saba Zia Naserani
+Bachelor's Student in Artificial Intelligence and Computer Science
