@@ -113,12 +113,14 @@ st.markdown("### Selected Movie")
 col1, col2 = st.columns([1, 4])
 
 with col1:
-    st.image(selected_poster_url, width=150)
+    if selected_poster_url:
+        st.image(selected_poster_url, width=150)
+    else:
+        st.write("No poster available")
 
 with col2:
     st.markdown(f"### 🎬 {selected_movie_data['title']}")
     st.write(f"Genres: {selected_movie_data['genres']}")
-    st.write(f"Movie ID: {selected_movie_id}")
 
 
 if st.button("🎯 Recommend"):
@@ -138,7 +140,10 @@ if st.button("🎯 Recommend"):
         col1, col2 = st.columns([1, 4])
 
         with col1:
-            st.image(poster_url, width=130)
+            if poster_url:
+                st.image(poster_url, width=130)
+            else:
+                st.write("No poster available")
 
         with col2:
             st.markdown(
