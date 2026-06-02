@@ -1,81 +1,81 @@
 # 🎬 CineMatch
-Live Demo:
+
+### Live Demo
+
 https://cinematch-saba.streamlit.app
 
-A movie recommendation web application built with Python and Streamlit.
-
-CineMatch recommends movies similar to a selected movie using Item-Based Collaborative Filtering and Cosine Similarity. The application also integrates with The Movie Database (TMDB) API to display movie posters and create a more interactive user experience.
+CineMatch is a movie recommendation web application built with Python and Streamlit. The system recommends movies similar to a selected title using Item-Based Collaborative Filtering and Cosine Similarity. It also integrates with The Movie Database (TMDB) API to display movie posters and improve the user experience.
 
 ---
 
-## 🚀 Live Features
+## Features
 
-* Search and select a movie
-* Generate similar movie recommendations
-* Display movie posters using TMDB API
-* Show similarity scores
-* Adjustable number of recommendations
-* Modern Streamlit user interface
-* Responsive movie recommendation cards
+* Search and select a movie from the MovieLens dataset
+* Generate movie recommendations based on rating similarity
+* Display movie posters using the TMDB API
+* Show similarity scores for recommended movies
+* Adjust the number of recommendations
+* Interactive web interface built with Streamlit
+* Cloud deployment with Streamlit Community Cloud
 
 ---
 
-## 📊 Dataset
+## Dataset
 
-This project uses the MovieLens Latest Small Dataset.
+This project uses the **MovieLens Latest Small Dataset**.
 
-The dataset contains:
+The dataset includes:
 
 * User ratings
 * Movie titles
-* Movie IDs
 * Genre information
-* TMDB movie identifiers
+* Movie identifiers
+* TMDB identifiers
 
-Files used:
+Files used in this project:
 
-* ratings.csv
-* movies.csv
-* links.csv
+```text
+ratings.csv
+movies.csv
+links.csv
+```
 
 ---
 
-## 🧠 Recommendation Method
+## Recommendation Approach
 
-The recommendation engine uses:
+The recommendation engine is based on **Item-Based Collaborative Filtering**.
 
-### Item-Based Collaborative Filtering
-
-Instead of finding similar users, the system finds movies that receive similar rating patterns from users.
+Instead of finding users with similar preferences, the system identifies movies that receive similar rating patterns from users.
 
 ### Workflow
 
 1. Load movie ratings data
-2. Create a User-Movie Matrix
-3. Fill missing ratings with zeros
-4. Compute Cosine Similarity between movies
-5. Build a Movie Similarity Matrix
-6. Find the most similar movies to the selected movie
-7. Display recommendations ranked by similarity score
+2. Create a user–movie rating matrix
+3. Replace missing ratings with zeros
+4. Compute cosine similarity between movies
+5. Build a movie similarity matrix
+6. Identify the most similar movies
+7. Rank recommendations by similarity score
+8. Display recommendations together with movie posters
 
 ---
 
-## 📸 TMDB Integration
+## TMDB API Integration
 
-Movie posters are fetched dynamically using the TMDB API.
+Movie posters are retrieved dynamically through the TMDB API.
 
-Steps:
+Process:
 
-1. Retrieve TMDB IDs from the MovieLens links dataset
-2. Query the TMDB API
-3. Extract poster paths
-4. Display posters inside the Streamlit application
-
-If a poster is unavailable, a placeholder image is shown.
+1. Retrieve TMDB IDs from the MovieLens dataset
+2. Send requests to the TMDB API
+3. Extract poster information
+4. Display posters within the application
+5. Show a fallback message when no poster is available
 
 ---
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```text
 movie-recommendation-system/
@@ -101,12 +101,12 @@ movie-recommendation-system/
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/movie-recommendation-system.git
+git clone https://github.com/saba-zia/movie-recommendation-system.git
 cd movie-recommendation-system
 ```
 
@@ -118,13 +118,13 @@ python -m venv .venv
 
 Activate the environment:
 
-Windows:
+### Windows
 
 ```bash
 .venv\Scripts\activate
 ```
 
-Mac/Linux:
+### macOS / Linux
 
 ```bash
 source .venv/bin/activate
@@ -138,15 +138,15 @@ pip install -r requirements.txt
 
 ---
 
-## 🔑 TMDB API Setup
+## TMDB API Setup
 
-Create:
+Create the following file:
 
 ```text
 .streamlit/secrets.toml
 ```
 
-Add:
+Add your TMDB API key:
 
 ```toml
 TMDB_API_KEY = "your_api_key_here"
@@ -156,21 +156,13 @@ You can obtain a free API key from:
 
 https://www.themoviedb.org
 
-Important:
-
-Do not commit your API key to GitHub.
-
-The file is ignored using:
-
-```gitignore
-.streamlit/secrets.toml
-```
+**Note:** The API key should never be committed to GitHub. The `secrets.toml` file is excluded through `.gitignore`.
 
 ---
 
-## ▶️ Run the Application
+## Running the Application
 
-Start Streamlit:
+Start the Streamlit application:
 
 ```bash
 streamlit run app.py
@@ -184,7 +176,7 @@ http://localhost:8501
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 * Python
 * Pandas
@@ -196,42 +188,40 @@ http://localhost:8501
 
 ---
 
-## 📚 Skills Demonstrated
+## Skills Demonstrated
 
 This project demonstrates:
 
 * Data preprocessing
-* Exploratory data analysis
 * Recommender systems
-* Item-based collaborative filtering
+* Collaborative filtering
 * Cosine similarity
 * API integration
 * Modular Python development
-* Streamlit web application development
+* Streamlit application development
 * Git and GitHub workflows
+* Cloud deployment
 
 ---
 
-## 🔮 Future Improvements
+## Future Improvements
 
-Potential future enhancements:
+Potential future enhancements include:
 
-* Search bar with autocomplete
-* Content-based filtering
-* Hybrid recommender system
-* User authentication
+* Content-based recommendations
+* Hybrid recommender systems
+* Search autocomplete
 * Movie details page
 * Trailer integration
 * Recommendation explanations
-* Precision@K and Recall@K evaluation
-* Deployment on Streamlit Community Cloud
+* User authentication
+* Recommendation quality evaluation (Precision@K, Recall@K, nDCG)
 
 ---
 
-## 👩‍💻 Author
+## Author
 
-Author
+**Saba Zia Naserani**
 
-Saba Zia Naserani
-Bachelor Student in Artificial Intelligence
+BSc Student in Artificial Intelligence
 Johannes Kepler University Linz
