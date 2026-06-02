@@ -1,240 +1,233 @@
-# Movie Recommendation System
+# 🎬 CineMatch
 
-## Project Overview
+A movie recommendation web application built with Python and Streamlit.
 
-This project implements a movie recommendation system using collaborative filtering techniques on the MovieLens dataset.
-
-The objective is to explore how recommender systems work by building a complete recommendation pipeline, starting from raw user ratings and ending with personalized movie recommendations.
-
-The project was developed in Python using Pandas, NumPy, Scikit-Learn, and Jupyter Notebook.
+CineMatch recommends movies similar to a selected movie using Item-Based Collaborative Filtering and Cosine Similarity. The application also integrates with The Movie Database (TMDB) API to display movie posters and create a more interactive user experience.
 
 ---
 
-## Dataset
+## 🚀 Live Features
 
-The project uses the MovieLens dataset, which contains:
+* Search and select a movie
+* Generate similar movie recommendations
+* Display movie posters using TMDB API
+* Show similarity scores
+* Adjustable number of recommendations
+* Modern Streamlit user interface
+* Responsive movie recommendation cards
 
-* User IDs
-* Movie IDs
-* Movie titles
+---
+
+## 📊 Dataset
+
+This project uses the MovieLens Latest Small Dataset.
+
+The dataset contains:
+
 * User ratings
+* Movie titles
+* Movie IDs
+* Genre information
+* TMDB movie identifiers
 
-Each user can rate multiple movies on a scale from 0.5 to 5.0 stars.
+Files used:
 
----
-
-## Stage 1: Data Loading and Exploration
-
-The first step was loading the dataset and exploring its structure.
-
-Tasks completed:
-
-* Loaded ratings data
-* Loaded movie metadata
-* Inspected missing values
-* Checked dataset dimensions
-* Explored rating distributions
-* Examined user activity and movie popularity
-
-Purpose:
-
-To understand the data before building recommendation models.
+* ratings.csv
+* movies.csv
+* links.csv
 
 ---
 
-## Stage 2: User-Movie Matrix Construction
+## 🧠 Recommendation Method
 
-A user-item interaction matrix was created.
+The recommendation engine uses:
 
-Rows represent:
+### Item-Based Collaborative Filtering
 
-* Users
+Instead of finding similar users, the system finds movies that receive similar rating patterns from users.
 
-Columns represent:
+### Workflow
 
-* Movies
-
-Values represent:
-
-* Ratings
-
-Example:
-
-| User   | Movie A | Movie B | Movie C |
-| ------ | ------- | ------- | ------- |
-| User 1 | 5       | 4       | 0       |
-| User 2 | 3       | 0       | 5       |
-
-Missing ratings were filled with zeros.
-
-Purpose:
-
-This matrix is the foundation of collaborative filtering.
+1. Load movie ratings data
+2. Create a User-Movie Matrix
+3. Fill missing ratings with zeros
+4. Compute Cosine Similarity between movies
+5. Build a Movie Similarity Matrix
+6. Find the most similar movies to the selected movie
+7. Display recommendations ranked by similarity score
 
 ---
 
-## Stage 3: Cosine Similarity Between Users
+## 📸 TMDB Integration
 
-User similarity was computed using Cosine Similarity.
+Movie posters are fetched dynamically using the TMDB API.
 
-Cosine similarity measures how similar two users are based on their rating behavior.
+Steps:
 
-Values range from:
+1. Retrieve TMDB IDs from the MovieLens links dataset
+2. Query the TMDB API
+3. Extract poster paths
+4. Display posters inside the Streamlit application
 
-* 1 → identical preferences
-* 0 → unrelated preferences
-* -1 → opposite preferences
-
-Purpose:
-
-To identify users with similar movie tastes.
+If a poster is unavailable, a placeholder image is shown.
 
 ---
 
-## Stage 4: User-Based Collaborative Filtering
+## 🏗️ Project Structure
 
-For a target user:
-
-1. Find the most similar users.
-2. Collect their ratings.
-3. Use those ratings to generate recommendations.
-
-Example:
-
-If User A and User B have very similar tastes, movies liked by User B can be recommended to User A.
-
-Purpose:
-
-Generate personalized recommendations using neighboring users.
-
----
-
-## Stage 5: Singular Value Decomposition (SVD)
-
-Dimensionality reduction was applied using Singular Value Decomposition (SVD).
-
-SVD decomposes the user-movie matrix into latent factors that capture hidden relationships between users and movies.
-
-Benefits:
-
-* Reduces noise
-* Compresses information
-* Captures hidden preference patterns
-* Improves recommendation quality
-
-Purpose:
-
-Create a more powerful collaborative filtering model.
+```text
+movie-recommendation-system/
+│
+├── .streamlit/
+│   └── secrets.toml
+│
+├── data/
+│   └── raw/
+│       ├── ratings.csv
+│       ├── movies.csv
+│       └── links.csv
+│
+├── src/
+│   ├── data_loader.py
+│   ├── recommender.py
+│   └── poster_fetcher.py
+│
+├── app.py
+├── requirements.txt
+└── README.md
+```
 
 ---
 
-## Stage 6: User Similarity in Latent Space
+## ⚙️ Installation
 
-After applying SVD:
+Clone the repository:
 
-* User feature vectors were generated.
-* Cosine similarity was calculated again using latent features.
+```bash
+git clone https://github.com/YOUR_USERNAME/movie-recommendation-system.git
+cd movie-recommendation-system
+```
 
-This produces similarity scores based on hidden preferences rather than only explicit ratings.
+Create a virtual environment:
 
-Purpose:
+```bash
+python -m venv .venv
+```
 
-Find users with similar underlying interests.
+Activate the environment:
 
----
+Windows:
 
-## Stage 7: Personalized Movie Recommendations
+```bash
+.venv\Scripts\activate
+```
 
-Recommendations were generated using:
+Mac/Linux:
 
-1. The most similar users found in latent space.
-2. Their average movie ratings.
-3. Removal of movies already watched by the target user.
-4. Ranking remaining movies by predicted score.
+```bash
+source .venv/bin/activate
+```
 
-Example recommended movies:
+Install dependencies:
 
-* Terminator 2: Judgment Day (1991)
-* The Godfather (1972)
-* Blade Runner (1982)
-* Aliens (1986)
-* The Sixth Sense (1999)
-* Die Hard (1988)
-
-Purpose:
-
-Provide personalized unseen movie recommendations.
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## Stage 8: Evaluation
+## 🔑 TMDB API Setup
 
-The recommendation model was evaluated using Root Mean Squared Error (RMSE).
+Create:
 
-RMSE measures the difference between:
+```text
+.streamlit/secrets.toml
+```
 
-* Original ratings
-* Ratings reconstructed by SVD
+Add:
 
-Formula:
+```toml
+TMDB_API_KEY = "your_api_key_here"
+```
 
-RMSE = sqrt(MSE)
+You can obtain a free API key from:
 
-Result:
+https://www.themoviedb.org
 
-RMSE = 0.352
+Important:
 
-Interpretation:
+Do not commit your API key to GitHub.
 
-A lower RMSE indicates better reconstruction quality.
+The file is ignored using:
 
-An RMSE of 0.352 suggests that the SVD model captures the rating patterns effectively and produces reasonable predictions.
+```gitignore
+.streamlit/secrets.toml
+```
 
 ---
 
-## Technologies Used
+## ▶️ Run the Application
+
+Start Streamlit:
+
+```bash
+streamlit run app.py
+```
+
+The application will be available at:
+
+```text
+http://localhost:8501
+```
+
+---
+
+## 🛠️ Technologies Used
 
 * Python
 * Pandas
-* NumPy
 * Scikit-Learn
-* SciPy
-* Jupyter Notebook
-* Matplotlib
+* Streamlit
+* Requests
+* TMDB API
+* MovieLens Dataset
 
 ---
 
-## Skills Demonstrated
+## 📚 Skills Demonstrated
 
 This project demonstrates:
 
 * Data preprocessing
-* Exploratory Data Analysis (EDA)
-* Matrix manipulation
-* Cosine similarity
-* Collaborative filtering
-* Recommendation systems
-* Singular Value Decomposition (SVD)
-* Model evaluation with RMSE
-* Data analysis using Python
-
----
-
-## Future Improvements
-
-Possible future enhancements include:
-
+* Exploratory data analysis
+* Recommender systems
 * Item-based collaborative filtering
-* Content-based recommendations
-* Hybrid recommender systems
-* Precision@K evaluation
-* Recall@K evaluation
-* nDCG evaluation
-* Interactive web application using Streamlit
+* Cosine similarity
+* API integration
+* Modular Python development
+* Streamlit web application development
+* Git and GitHub workflows
 
 ---
 
-## Author
+## 🔮 Future Improvements
 
-Saba Zia Naserani
-Bachelor's Student in Artificial Intelligence and Computer Science
+Potential future enhancements:
+
+* Search bar with autocomplete
+* Content-based filtering
+* Hybrid recommender system
+* User authentication
+* Movie details page
+* Trailer integration
+* Recommendation explanations
+* Precision@K and Recall@K evaluation
+* Deployment on Streamlit Community Cloud
+
+---
+
+## 👩‍💻 Author
+
+**Saba Zia Naserani**
+
+Bachelor's Student in Artificial Intelligence
