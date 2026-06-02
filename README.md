@@ -228,6 +228,8 @@ Potential future enhancements:
 
 ## 👩‍💻 Author
 
-**Saba Zia Naserani**
+Author
 
-Bachelor's Student in Artificial Intelligence
+Saba Zia Naserani
+Bachelor Student in Artificial Intelligence
+Johannes Kepler University Linz
